@@ -7,7 +7,7 @@ namespace CardCrawler.Managers
 {
     public interface IJsonParsingManager
     {
-        CardSetFile ParseRawJsonFileLocation(string location);
+        CardSetFile ParseRawJsonFileLocation(string locationUrl);
 
         CardSet ParseRawJsonFile(string rawJson);
     }

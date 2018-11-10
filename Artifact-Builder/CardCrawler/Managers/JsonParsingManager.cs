@@ -20,7 +20,7 @@ namespace CardCrawler.Managers
             throw new NotImplementedException();
         }
 
-        public CardSetFile ParseRawJsonFileLocation(string location)
+        public CardSetFile ParseRawJsonFileLocation(string locationUrl)
         {
             throw new NotImplementedException();
         }
