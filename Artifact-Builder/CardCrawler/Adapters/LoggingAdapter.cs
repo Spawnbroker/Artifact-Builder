@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CardCrawler.Adapters
 {
-    public class LoggingAdapter<CardRetrievalService> : ILoggingAdapter<CardRetrievalService>
+    public class LoggingAdapter<T> : ILoggingAdapter<T>
     {
-        private readonly ILoggingAdapter<CardRetrievalService> _logger;
+        private readonly ILogger<T> _logger;
 
-        public LoggingAdapter(ILoggingAdapter<CardRetrievalService> logger)
+        public LoggingAdapter(ILogger<T> logger)
         {
             this._logger = logger;
         }

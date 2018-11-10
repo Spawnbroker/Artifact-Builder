@@ -1,4 +1,5 @@
-﻿using CardCrawler.Services;
+﻿using CardCrawler.Adapters;
+using CardCrawler.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,20 +17,21 @@ namespace CardCrawler
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             serviceProvider.GetService<ILoggerFactory>()
                 .AddConsole(LogLevel.Debug);
-            var logger = serviceProvider.GetService<ILoggerFactory>()
-                .CreateLogger<Program>();
-                logger.LogDebug("Starting application");
+            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger<Program>();
+            logger.LogDebug("Starting application");
 
             serviceProvider.GetService<ICardRetrievalService>().GetCardSet();
         }
 
-        private static void ConfigureServices(IServiceCollection serviceCollection)
+        private static void ConfigureServices(IServiceCollection services)
         {
-            serviceCollection.AddSingleton(new LoggerFactory()
+            services.AddSingleton(new LoggerFactory()
                 .AddConsole()
                 .AddDebug());
-            serviceCollection.AddLogging();
-            serviceCollection.AddTransient<ICardRetrievalService, CardRetrievalService>();
+            services.AddLogging();
+            services.AddTransient<ICardRetrievalService, CardRetrievalService>();
+            services.AddTransient<ILoggingAdapter<CardRetrievalService>, LoggingAdapter<CardRetrievalService>>();
         }
     }
 }
