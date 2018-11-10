@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCrawler", "CardCrawler\CardCrawler.csproj", "{5060F605-1C6C-433A-BC39-E5920D46404A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCrawlerTest", "CardCrawlerTest\CardCrawlerTest.csproj", "{1EE041E9-52BF-474A-BBAB-AAD19D720F5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5060F605-1C6C-433A-BC39-E5920D46404A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5060F605-1C6C-433A-BC39-E5920D46404A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5060F605-1C6C-433A-BC39-E5920D46404A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE041E9-52BF-474A-BBAB-AAD19D720F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE041E9-52BF-474A-BBAB-AAD19D720F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE041E9-52BF-474A-BBAB-AAD19D720F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE041E9-52BF-474A-BBAB-AAD19D720F5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
