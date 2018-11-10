@@ -4,6 +4,7 @@ using CardCrawler.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CardCrawler.Managers
 {
@@ -22,9 +23,20 @@ namespace CardCrawler.Managers
             this._jsonParser = jsonParser;
         }
 
-        public CardSetFile GetCardSetFile(string setId)
+        public async Task<CardSetFile> GetCardSetFile(string setId)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrEmpty(setId))
+            {
+                throw new ArgumentNullException("setId");
+            }
+            int setIdInt;
+            bool parseSucceeded = Int32.TryParse(setId, out setIdInt);
+            if(!parseSucceeded)
+            {
+                throw new FormatException("setId was not an integer.");
+            }
+            string fileLocation = await _httpService.GetRawJsonFileLocation(setId);
+            return _jsonParser.ParseRawJsonFileLocation(fileLocation);
         }
     }
 }

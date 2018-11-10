@@ -227,8 +227,8 @@ namespace CardCrawlerTest
             // Assert
             // CardSet should be empty, but not null
             Assert.IsNotNull(cards);
-            Assert.IsNotNull(cards.Cards);
-            Assert.IsTrue(cards.Cards.Count == 0);
+            Assert.IsNotNull(cards.card_list);
+            Assert.IsTrue(cards.card_list.Count == 0);
         }
 
         [TestMethod]
@@ -242,8 +242,8 @@ namespace CardCrawlerTest
             CardSet cards = myCardService.GetCardSetById("00");
             // Assert
             Assert.IsNotNull(cards);
-            Assert.IsNotNull(cards.Cards);
-            Assert.IsTrue(cards.Cards.Count != 0);
+            Assert.IsNotNull(cards.card_list);
+            Assert.IsTrue(cards.card_list.Count != 0);
         }
     }
 }

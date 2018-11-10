@@ -20,8 +20,8 @@ namespace CardCrawlerTest
     public class CardSetManagerTest
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestCardSetFileNullId()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task TestCardSetFileNullId()
         {
             // Arrange
             const string testContent = "test content";
@@ -37,18 +37,18 @@ namespace CardCrawlerTest
                     Content = new StringContent(testContent)
                 });
             HttpClientAccessor httpAccessor = new HttpClientAccessor(mockMessage.Object);
-            Mock<HttpClientService> mockClientService = new Mock<HttpClientService>(mockHttpLogger.Object, httpAccessor);
-            Mock<JsonParsingManager> mockJsonManager = new Mock<JsonParsingManager>(mockJsonLogger.Object);
+            Mock<IHttpClientService> mockClientService = new Mock<IHttpClientService>();
+            Mock<IJsonParsingManager> mockJsonManager = new Mock<IJsonParsingManager>();
             CardSetManager manager = new CardSetManager(mockCardSetLogger.Object, mockClientService.Object, mockJsonManager.Object);
             // Act
-            manager.GetCardSetFile(null);
+            await manager.GetCardSetFile(null);
             // Assert
             Assert.Fail();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestCardSetFileEmptyId()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task TestCardSetFileEmptyId()
         {
             // Arrange
             const string testContent = "test content";
@@ -64,18 +64,18 @@ namespace CardCrawlerTest
                     Content = new StringContent(testContent)
                 });
             HttpClientAccessor httpAccessor = new HttpClientAccessor(mockMessage.Object);
-            Mock<HttpClientService> mockClientService = new Mock<HttpClientService>(mockHttpLogger.Object, httpAccessor);
-            Mock<JsonParsingManager> mockJsonManager = new Mock<JsonParsingManager>(mockJsonLogger.Object);
+            Mock<IHttpClientService> mockClientService = new Mock<IHttpClientService>();
+            Mock<IJsonParsingManager> mockJsonManager = new Mock<IJsonParsingManager>();
             CardSetManager manager = new CardSetManager(mockCardSetLogger.Object, mockClientService.Object, mockJsonManager.Object);
             // Act
-            manager.GetCardSetFile("");
+            await manager.GetCardSetFile("");
             // Assert
             Assert.Fail();
         }
 
         [TestMethod]
         [ExpectedException(typeof(FormatException))]
-        public void TestCardSetFileInvalidId()
+        public async Task TestCardSetFileInvalidId()
         {
             // Arrange
             const string testContent = "test content";
@@ -91,21 +91,23 @@ namespace CardCrawlerTest
                     Content = new StringContent(testContent)
                 });
             HttpClientAccessor httpAccessor = new HttpClientAccessor(mockMessage.Object);
-            Mock<HttpClientService> mockClientService = new Mock<HttpClientService>(mockHttpLogger.Object, httpAccessor);
-            Mock<JsonParsingManager> mockJsonManager = new Mock<JsonParsingManager>(mockJsonLogger.Object);
+            Mock<IHttpClientService> mockClientService = new Mock<IHttpClientService>();
+            Mock<IJsonParsingManager> mockJsonManager = new Mock<IJsonParsingManager>();
             CardSetManager manager = new CardSetManager(mockCardSetLogger.Object, mockClientService.Object, mockJsonManager.Object);
             // Act
-            CardSetFile setFile = manager.GetCardSetFile("lkjhekljhdjkfgksghdf");
+            CardSetFile setFile = await manager.GetCardSetFile("lkjhekljhdjkfgksghdf");
             // Assert
             // Invalid Set Id seems to return the base set, but we want to throw a format exception
             Assert.Fail();
         }
 
         [TestMethod]
-        public void TestCardSetFileValidId()
+        public async Task TestCardSetFileValidId()
         {
             // Arrange
             const string testContent = "test content";
+            string testSetId = "00";
+            string testFileLocation = @"{""cdn_root"":""https:\/\/ steamcdn - a.akamaihd.net\/ "",""url"":""\/ apps\/ 583950\/ resource\/ card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541859144}";
             Mock<ILoggingAdapter<CardSetManager>> mockCardSetLogger = new Mock<ILoggingAdapter<CardSetManager>>();
             Mock<ILoggingAdapter<HttpClientService>> mockHttpLogger = new Mock<ILoggingAdapter<HttpClientService>>();
             Mock<ILoggingAdapter<JsonParsingManager>> mockJsonLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
@@ -118,16 +120,24 @@ namespace CardCrawlerTest
                     Content = new StringContent(testContent)
                 });
             HttpClientAccessor httpAccessor = new HttpClientAccessor(mockMessage.Object);
-            Mock<HttpClientService> mockClientService = new Mock<HttpClientService>(mockHttpLogger.Object, httpAccessor);
-            Mock<JsonParsingManager> mockJsonManager = new Mock<JsonParsingManager>(mockJsonLogger.Object);
+            Mock<IHttpClientService> mockClientService = new Mock<IHttpClientService>();
+            mockClientService.Setup(mockClient => mockClient.GetRawJsonFileLocation(testSetId)).Returns(Task.FromResult(testFileLocation));
+            Mock<IJsonParsingManager> mockJsonManager = new Mock<IJsonParsingManager>();
+            mockJsonManager.Setup(jsonManager => jsonManager.ParseRawJsonFileLocation(testFileLocation))
+                .Returns(new CardSetFile
+                {
+                    cdn_root = @"https:\/\/ steamcdn - a.akamaihd.net\/",
+                    expire_time = 1541859144,
+                    url = @"\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"
+                });
             CardSetManager manager = new CardSetManager(mockCardSetLogger.Object, mockClientService.Object, mockJsonManager.Object);
             // Act
-            CardSetFile setFile = manager.GetCardSetFile("00");
+            CardSetFile setFile = await manager.GetCardSetFile(testSetId);
             // Assert
             Assert.IsNotNull(setFile);
-            Assert.IsNotNull(setFile.ContentDeliveryRoot);
-            Assert.IsNotNull(setFile.FileExpirationDate);
-            Assert.IsNotNull(setFile.Url);
+            Assert.IsNotNull(setFile.cdn_root);
+            Assert.IsNotNull(setFile.expire_time);
+            Assert.IsNotNull(setFile.url);
         }
     }
 }

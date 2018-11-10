@@ -29,21 +29,13 @@ namespace CardCrawler.Services
             {
                 throw new ArgumentNullException(setId);
             }
-            try
+            string result = null;
+            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + setId);
+            if (response.IsSuccessStatusCode)
             {
-                string result = null;
-                HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + setId);
-                if (response.IsSuccessStatusCode)
-                {
-                    result = await response.Content.ReadAsStringAsync();
-                }
-                return result;
+                result = await response.Content.ReadAsStringAsync();
             }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, "Error thrown in HttpClientService.GetRawJsonFileLocation method.");
-            }
-            return null;
+            return result;
         }
     }
 }

@@ -62,8 +62,8 @@ namespace CardCrawlerTest
             CardSet set = manager.ParseRawJsonFile(validJsonData);
             // Assert
             Assert.IsNotNull(set);
-            Assert.IsNotNull(set.Cards);
-            Assert.IsTrue(set.Cards.Count > 0);
+            Assert.IsNotNull(set.card_list);
+            Assert.IsTrue(set.card_list.Count > 0);
         }
 
         [TestMethod]
@@ -107,6 +107,19 @@ namespace CardCrawlerTest
 
         [TestMethod]
         [ExpectedException(typeof(FormatException))]
+        public void TestFileLocationInvalidJsonKeys()
+        {
+            // Arrange
+            Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
+            // Act
+            const string validJsonDataWithWrongKeys = @"{ ""key_A"":""https:\/\/steamcdn-a.akamaihd.net\/"",""key_B"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""key_C"":1541860748}";
+            CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonDataWithWrongKeys);
+            // Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void TestFileLocationValidFormat()
         {
             // Arrange
@@ -117,9 +130,39 @@ namespace CardCrawlerTest
             CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonData);
             // Assert
             Assert.IsNotNull(cardSetFile);
-            Assert.IsNotNull(cardSetFile.ContentDeliveryRoot);
-            Assert.IsNotNull(cardSetFile.FileExpirationDate);
-            Assert.IsNotNull(cardSetFile.Url);
+            Assert.IsNotNull(cardSetFile.cdn_root);
+            Assert.IsNotNull(cardSetFile.expire_time);
+            Assert.IsNotNull(cardSetFile.url);
+        }
+
+        [TestMethod]
+        public void TestFileLocationValidFormatUtcDate()
+        {
+            // Arrange
+            double unixTimeStamp = 1541860748;
+            const string validJsonData = @"{ ""cdn_root"":""https:\/\/steamcdn-a.akamaihd.net\/"",""url"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541860748}";
+            Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
+            // Act
+            CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonData);
+            // Assert
+            Assert.AreEqual(1541860748, cardSetFile.expire_time);
+        }
+
+        [TestMethod]
+        public void TestFileLocationValidFormatWithAdditionalKeys()
+        {
+            // Arrange
+            Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
+            // Act
+            const string validJsonData = @"{ ""cdn_root"":""https:\/\/steamcdn-a.akamaihd.net\/"",""url"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541860748,""key_D"":""123""}";
+            CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonData);
+            // Assert
+            Assert.IsNotNull(cardSetFile);
+            Assert.IsNotNull(cardSetFile.cdn_root);
+            Assert.IsNotNull(cardSetFile.expire_time);
+            Assert.IsNotNull(cardSetFile.url);
         }
     }
 }

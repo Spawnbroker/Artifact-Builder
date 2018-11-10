@@ -6,8 +6,8 @@ namespace CardCrawler.Entities
 {
     public class CardSetFile
     {
-        public string ContentDeliveryRoot { get; set; }
-        public DateTime FileExpirationDate { get; set; }
-        public string Url { get; set; }
+        public string cdn_root { get; set; }
+        public string url { get; set; }
+        public int expire_time { get; set; }
     }
 }

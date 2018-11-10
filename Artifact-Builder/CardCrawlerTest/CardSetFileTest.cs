@@ -16,9 +16,9 @@ namespace CardCrawlerTest
             CardSetFile file = new CardSetFile();
             const string test = "testWebsite";
             // Act
-            file.ContentDeliveryRoot = test;
+            file.cdn_root = test;
             // Assert
-            Assert.AreEqual(test, file.ContentDeliveryRoot);
+            Assert.AreEqual(test, file.cdn_root);
         }
 
         [TestMethod]
@@ -26,11 +26,10 @@ namespace CardCrawlerTest
         {
             // Arrange
             CardSetFile file = new CardSetFile();
-            DateTime today = new DateTime(2018, 11, 10);
             // Act
-            file.FileExpirationDate = today;
+            file.expire_time = 1541860748;
             // Assert
-            Assert.AreEqual(today, file.FileExpirationDate);
+            Assert.AreEqual(1541860748, file.expire_time);
         }
 
         [TestMethod]
@@ -40,9 +39,9 @@ namespace CardCrawlerTest
             CardSetFile file = new CardSetFile();
             const string testUrl = "http://website.com";
             // Act
-            file.Url = testUrl;
+            file.url = testUrl;
             // Assert
-            Assert.AreEqual(testUrl, file.Url);
+            Assert.AreEqual(testUrl, file.url);
         }
     }
 }
