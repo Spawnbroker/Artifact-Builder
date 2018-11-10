@@ -1,4 +1,5 @@
-﻿using CardCrawler.Adapters;
+﻿using CardCrawler.Accessors;
+using CardCrawler.Adapters;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,17 +11,16 @@ namespace CardCrawler.Services
 {
     public class HttpClientService : IHttpClientService
     {
-        private HttpClient _client;
+        private readonly IHttpClientAccessor _clientAccessor;
         private readonly ILoggingAdapter<HttpClientService> _logger;
+        private readonly HttpClient _client;
 
-        public HttpClientService(ILoggingAdapter<HttpClientService> logger)
+        public HttpClientService(ILoggingAdapter<HttpClientService> logger,
+            IHttpClientAccessor clientAccessor)
         {
             this._logger = logger;
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://playartifact.com/cardset/");
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            this._clientAccessor = clientAccessor;
+            this._client = _clientAccessor._client;
         }
 
         public async Task<string> GetRawJsonFileLocation(string setId)
