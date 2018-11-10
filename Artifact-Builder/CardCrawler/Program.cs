@@ -6,9 +6,9 @@ using System;
 
 namespace CardCrawler
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
 
             ServiceCollection serviceCollection = new ServiceCollection();

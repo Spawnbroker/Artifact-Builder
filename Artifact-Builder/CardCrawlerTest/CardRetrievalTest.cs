@@ -1,4 +1,5 @@
 using CardCrawler.Adapters;
+using CardCrawler.Entities;
 using CardCrawler.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,27 +12,15 @@ namespace CardCrawlerTest
     public class CardRetrievalTest
     {
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void TestGetCardSet()
         {
             // Arrange
             Mock<ILoggingAdapter<CardRetrievalService>> myLogger = new Mock<ILoggingAdapter<CardRetrievalService>>();
             myLogger.Setup(logger => logger.LogInformation(It.IsAny<string>())).Verifiable();
             // Act
-            try
-            {
-                CardRetrievalService myCardService = new CardRetrievalService(myLogger.Object);
-                myCardService.GetCardSet();
-            }
-            catch (NotImplementedException)
-            {
-                throw;
-            }
-            // Assert
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
+            CardRetrievalService myCardService = new CardRetrievalService(myLogger.Object);
+            CardSet cards = myCardService.GetCardSet();
+            Assert.IsNotNull(cards);
         }
     }
 }
