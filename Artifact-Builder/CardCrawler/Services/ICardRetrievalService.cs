@@ -12,6 +12,5 @@ namespace CardCrawler.Services
         ArtifactCard GetCardById(string id);
         ArtifactCard GetCardByName(string name);
         List<ArtifactCard> GetCardsByType(string type);
-        string GetRawSetData();
     }
 }

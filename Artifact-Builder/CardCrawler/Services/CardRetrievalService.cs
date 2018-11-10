@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using CardCrawler.Adapters;
 using CardCrawler.Entities;
@@ -37,11 +38,6 @@ namespace CardCrawler.Services
         }
         
         public CardSet GetCardSetById(string id)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public string GetRawSetData()
         {
             throw new NotImplementedException();
         }

@@ -33,5 +33,27 @@ namespace CardCrawlerTest
             logAdapter.LogInformation("Test logging", new object[] { });
             // Assert
         }
+
+        [TestMethod]
+        public void TestLogErrorNoParams()
+        {
+            // Arrange
+            Mock<ILogger<CardRetrievalService>> myLogger = new Mock<ILogger<CardRetrievalService>>();
+            // Act
+            LoggingAdapter<CardRetrievalService> logAdapter = new LoggingAdapter<CardRetrievalService>(myLogger.Object);
+            logAdapter.LogError(new Exception(), "Test logging");
+            // Assert
+        }
+
+        [TestMethod]
+        public void TestLogErrorWithParams()
+        {
+            // Arrange
+            Mock<ILogger<CardRetrievalService>> myLogger = new Mock<ILogger<CardRetrievalService>>();
+            // Act
+            LoggingAdapter<CardRetrievalService> logAdapter = new LoggingAdapter<CardRetrievalService>(myLogger.Object);
+            logAdapter.LogError(new Exception(), "Test logging", new object[] { });
+            // Assert
+        }
     }
 }

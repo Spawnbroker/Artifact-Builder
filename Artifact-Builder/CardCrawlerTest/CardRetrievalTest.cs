@@ -245,18 +245,5 @@ namespace CardCrawlerTest
             Assert.IsNotNull(cards.Cards);
             Assert.IsTrue(cards.Cards.Count != 0);
         }
-
-        [TestMethod]
-        public void TestGetRawSetData()
-        {
-            // Arrange
-            Mock<ILoggingAdapter<CardRetrievalService>> myLogger = new Mock<ILoggingAdapter<CardRetrievalService>>();
-            myLogger.Setup(logger => logger.LogInformation(It.IsAny<string>())).Verifiable();
-            // Act
-            CardRetrievalService myCardService = new CardRetrievalService(myLogger.Object);
-            string json = myCardService.GetRawSetData();
-            // Assert
-            Assert.IsNotNull(json);
-        }
     }
 }
