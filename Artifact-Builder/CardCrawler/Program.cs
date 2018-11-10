@@ -10,7 +10,6 @@ namespace CardCrawler
     {
         public static void Main(string[] args)
         {
-
             ServiceCollection serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
@@ -21,7 +20,7 @@ namespace CardCrawler
             var logger = loggerFactory.CreateLogger<Program>();
             logger.LogDebug("Starting application");
 
-            serviceProvider.GetService<ICardRetrievalService>().GetCardSet();
+            serviceProvider.GetService<ICardRetrievalService>().GetRawSetData();
         }
 
         private static void ConfigureServices(IServiceCollection services)

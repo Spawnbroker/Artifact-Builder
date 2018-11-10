@@ -16,9 +16,33 @@ namespace CardCrawler.Services
             this._logger = logger;
         }
 
-        public CardSet GetCardSet()
+        public List<CardSet> All()
         {
-            _logger.LogInformation("Logger called from inside CardRetrievalService.");
+            throw new NotImplementedException();
+        }
+
+        public ArtifactCard GetCardById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ArtifactCard GetCardByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ArtifactCard> GetCardsByType(string type)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public CardSet GetCardSetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public string GetRawSetData()
+        {
             throw new NotImplementedException();
         }
     }

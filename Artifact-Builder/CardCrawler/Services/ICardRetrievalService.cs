@@ -7,6 +7,11 @@ namespace CardCrawler.Services
 {
     public interface ICardRetrievalService
     {
-        CardSet GetCardSet();
+        List<CardSet> All();
+        CardSet GetCardSetById(string id);
+        ArtifactCard GetCardById(string id);
+        ArtifactCard GetCardByName(string name);
+        List<ArtifactCard> GetCardsByType(string type);
+        string GetRawSetData();
     }
 }
