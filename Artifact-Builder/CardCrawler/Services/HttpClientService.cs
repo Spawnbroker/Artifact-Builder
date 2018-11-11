@@ -34,6 +34,10 @@ namespace CardCrawler.Services
                 _logger.LogError(ex, "CardSetFile cannot be null or empty.");
                 throw ex;
             }
+            if(file.cdn_root.Contains(@"\/"))
+            {
+                throw new FormatException("Invalid url format, escape characters are still in the string.");
+            }
             string result = null;
             HttpResponseMessage response = await _client.GetAsync(file.cdn_root + file.url);
             if (response.IsSuccessStatusCode)

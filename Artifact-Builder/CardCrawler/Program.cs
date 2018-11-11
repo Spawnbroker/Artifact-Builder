@@ -24,10 +24,11 @@ namespace CardCrawler
             var logger = loggerFactory.CreateLogger<Program>();
             logger.LogDebug("Starting application");
             IHttpClientService service = serviceProvider.GetService<IHttpClientService>();
-            string locationJson = await service.GetRawJsonFileLocation("00");
+            string locationJson = await service.GetRawJsonFileLocation("01");
             IJsonParsingManager jsonParser = serviceProvider.GetService<IJsonParsingManager>();
             CardSetFile cardSetFile = jsonParser.ParseRawJsonFileLocation(locationJson);
             string cardSetJson = await service.GetCardSetJson(cardSetFile);
+            CardSet cards = jsonParser.ParseRawJsonFile(cardSetJson);
         }
 
         private static void ConfigureServices(IServiceCollection services)

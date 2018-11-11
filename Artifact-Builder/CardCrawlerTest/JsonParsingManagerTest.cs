@@ -123,6 +123,7 @@ namespace CardCrawlerTest
         public void TestFileLocationValidFormat()
         {
             // Arrange
+            const string escapeChars = @"\/";
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
@@ -133,6 +134,27 @@ namespace CardCrawlerTest
             Assert.IsNotNull(cardSetFile.cdn_root);
             Assert.IsNotNull(cardSetFile.expire_time);
             Assert.IsNotNull(cardSetFile.url);
+            Assert.IsFalse(cardSetFile.cdn_root.Contains(escapeChars));
+            Assert.IsFalse(cardSetFile.url.Contains(escapeChars));
+        }
+
+        [TestMethod]
+        public void TestFileLocationDefaultFormat()
+        {
+            // Arrange
+            const string escapeChars = @"\/";
+            Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
+            // Act
+            const string jsonData = "{ \"cdn_root\":\"https:\\/\\/steamcdn-a.akamaihd.net\\/\",\"url\":\"\\/apps\\/583950\\/resource\\/card_set_1.0E871AFDD63D1CBD0FB52D924DF1923C4A6D443A.json\",\"expire_time\":1541954560}";
+            CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(jsonData);
+            // Assert
+            Assert.IsNotNull(cardSetFile);
+            Assert.IsNotNull(cardSetFile.cdn_root);
+            Assert.IsNotNull(cardSetFile.expire_time);
+            Assert.IsNotNull(cardSetFile.url);
+            Assert.IsFalse(cardSetFile.cdn_root.Contains(escapeChars));
+            Assert.IsFalse(cardSetFile.url.Contains(escapeChars));
         }
 
         [TestMethod]
