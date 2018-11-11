@@ -1,5 +1,6 @@
 ﻿using CardCrawler.Accessors;
 using CardCrawler.Adapters;
+using CardCrawler.Entities;
 using CardCrawler.Managers;
 using CardCrawler.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,10 @@ namespace CardCrawler
             var logger = loggerFactory.CreateLogger<Program>();
             logger.LogDebug("Starting application");
             IHttpClientService service = serviceProvider.GetService<IHttpClientService>();
-            string result = await service.GetRawJsonFileLocation("00");
+            string locationJson = await service.GetRawJsonFileLocation("00");
+            IJsonParsingManager jsonParser = serviceProvider.GetService<IJsonParsingManager>();
+            CardSetFile cardSetFile = jsonParser.ParseRawJsonFileLocation(locationJson);
+            string cardSetJson = await service.GetCardSetJson(cardSetFile);
         }
 
         private static void ConfigureServices(IServiceCollection services)

@@ -146,7 +146,7 @@ namespace CardCrawlerTest
             // Act
             CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonData);
             // Assert
-            Assert.AreEqual(1541860748, cardSetFile.expire_time);
+            Assert.AreEqual(unixTimeStamp, cardSetFile.expire_time);
         }
 
         [TestMethod]
