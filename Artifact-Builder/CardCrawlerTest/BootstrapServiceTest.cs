@@ -1,4 +1,4 @@
-﻿using CardCrawler;
+﻿using CardCrawler.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Text;
 namespace CardCrawlerTest
 {
     [TestClass]
-    public class ProgramTest
+    public class BootstrapServiceTest
     {
         [TestMethod]
-        public void TestMain()
+        public void BootstrapConstructorTest()
         {
-            Program.Main(new string[] { "test data 1", "test data 2", "test data 3" });
+            BootstrapService service = new BootstrapService();
         }
     }
 }

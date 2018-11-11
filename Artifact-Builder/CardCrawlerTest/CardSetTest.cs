@@ -119,6 +119,10 @@ namespace CardCrawlerTest
             list.large_image = new LargeImage();
             list.ingame_image = new IngameImage();
             list.references = new List<object>();
+            object o1 = new object();
+            object o2 = new object();
+            list.references.Add(o1);
+            list.references.Add(o2);
             // Act
             string result = list.ToString();
             // Assert
