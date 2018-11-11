@@ -10,96 +10,6 @@ namespace CardCrawlerTest
     public class CardSetTest
     {
         [TestMethod]
-        public void NamePropertyTest()
-        {
-            // Arrange
-            string testName = "Farvhan the Dreamer";
-            Name name = new Name();
-            // Act
-            name.english = testName;
-            // Assert
-            Assert.AreEqual(testName, name.english);
-        }
-
-        [TestMethod]
-        public void SetInfoPropertyTest()
-        {
-            // Arrange
-            int testSetId = 00;
-            int testPackItemDef = 0;
-            Name testName = new Name();
-            SetInfo setInfo = new SetInfo();
-            // Act
-            setInfo.set_id = testSetId;
-            setInfo.pack_item_def = testPackItemDef;
-            setInfo.name = testName;
-            // Assert
-            Assert.AreEqual(testSetId, setInfo.set_id);
-            Assert.AreEqual(testPackItemDef, setInfo.pack_item_def);
-            Assert.AreEqual(testName, setInfo.name);
-        }
-
-        [TestMethod]
-        public void CardNamePropertyTest()
-        {
-            // Arrange
-            string testName = "Farvhan the Dreamer";
-            CardName cardName = new CardName();
-            // Act
-            cardName.english = testName;
-            // Assert
-            Assert.AreEqual(testName, cardName.english);
-        }
-
-        [TestMethod]
-        public void CardTextPropertyTest()
-        {
-            // Arrange
-            string testText = "Pack Leadership<BR>\nFarvhan the Dreamer's allied neighbors have +1 Armor.";
-            CardText cardText = new CardText();
-            // Act
-            cardText.english = testText;
-            // Assert
-            Assert.AreEqual(testText, cardText.english);
-        }
-
-        [TestMethod]
-        public void MiniImagePropertyTest()
-        {
-            // Arrange
-            string testUrl = "<url to png>";
-            MiniImage miniImage = new MiniImage();
-            // Act
-            miniImage.@default = testUrl;
-            // Assert
-            Assert.AreEqual(testUrl, miniImage.@default);
-        }
-
-        [TestMethod]
-        public void LargeImagePropertyTest()
-        {
-            // Arrange
-            string testUrl = "<url to png>";
-            LargeImage largeImage = new LargeImage();
-            // Act
-            largeImage.@default = testUrl;
-            // Assert
-            Assert.AreEqual(testUrl, largeImage.@default);
-        }
-
-        [TestMethod]
-        public void InGameImagePropertyTest()
-        {
-            // Arrange
-            string testUrl = "<url to png>";
-            IngameImage ingameImage = new IngameImage();
-            // Act
-            ingameImage.@default = testUrl;
-            // Assert
-            Assert.AreEqual(testUrl, ingameImage.@default);
-        }
-
-        [TestMethod]
         public void CardListPropertyTest()
         {
             // Arrange
@@ -169,6 +79,95 @@ namespace CardCrawlerTest
         }
 
         [TestMethod]
+        public void CardListToStringNullObjectsTest()
+        {
+            // Arrange
+            CardList list = new CardList();
+            // Act
+            string result = list.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("card_id"));
+            Assert.IsTrue(result.Contains("base_card_id"));
+            Assert.IsTrue(result.Contains("card_type"));
+            Assert.IsTrue(result.Contains("card_name"));
+            Assert.IsTrue(result.Contains("card_text"));
+            Assert.IsTrue(result.Contains("mini_image"));
+            Assert.IsTrue(result.Contains("large_image"));
+            Assert.IsTrue(result.Contains("ingame_image"));
+            Assert.IsTrue(result.Contains("hit_points"));
+            Assert.IsTrue(result.Contains("references"));
+            Assert.IsTrue(result.Contains("illustrator"));
+            Assert.IsTrue(result.Contains("mana_cost"));
+            Assert.IsTrue(result.Contains("attack"));
+            Assert.IsTrue(result.Contains("is_black"));
+            Assert.IsTrue(result.Contains("sub_type"));
+            Assert.IsTrue(result.Contains("gold_cost"));
+            Assert.IsTrue(result.Contains("is_green"));
+            Assert.IsTrue(result.Contains("is_red"));
+            Assert.IsTrue(result.Contains("armor"));
+            Assert.IsTrue(result.Contains("is_blue"));
+        }
+
+        [TestMethod]
+        public void CardListToStringWithObjectsTest()
+        {
+            // Arrange
+            CardList list = new CardList();
+            list.card_name = new CardName();
+            list.card_text = new CardText();
+            list.mini_image = new MiniImage();
+            list.large_image = new LargeImage();
+            list.ingame_image = new IngameImage();
+            list.references = new List<object>();
+            // Act
+            string result = list.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("card_id"));
+            Assert.IsTrue(result.Contains("base_card_id"));
+            Assert.IsTrue(result.Contains("card_type"));
+            Assert.IsTrue(result.Contains("card_name"));
+            Assert.IsTrue(result.Contains("card_text"));
+            Assert.IsTrue(result.Contains("mini_image"));
+            Assert.IsTrue(result.Contains("large_image"));
+            Assert.IsTrue(result.Contains("ingame_image"));
+            Assert.IsTrue(result.Contains("hit_points"));
+            Assert.IsTrue(result.Contains("references"));
+            Assert.IsTrue(result.Contains("illustrator"));
+            Assert.IsTrue(result.Contains("mana_cost"));
+            Assert.IsTrue(result.Contains("attack"));
+            Assert.IsTrue(result.Contains("is_black"));
+            Assert.IsTrue(result.Contains("sub_type"));
+            Assert.IsTrue(result.Contains("gold_cost"));
+            Assert.IsTrue(result.Contains("is_green"));
+            Assert.IsTrue(result.Contains("is_red"));
+            Assert.IsTrue(result.Contains("armor"));
+            Assert.IsTrue(result.Contains("is_blue"));
+        }
+
+        [TestMethod]
+        public void CardNamePropertyTest()
+        {
+            // Arrange
+            string testName = "Farvhan the Dreamer";
+            CardName cardName = new CardName();
+            // Act
+            cardName.english = testName;
+            // Assert
+            Assert.AreEqual(testName, cardName.english);
+        }
+
+        [TestMethod]
+        public void CardNameToStringTest()
+        {
+            // Arrange
+            CardName cardName = new CardName();
+            // Act
+            string result = cardName.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("english"));
+        }
+
+        [TestMethod]
         public void CardSetPropertyTest()
         {
             // Arrange
@@ -196,6 +195,236 @@ namespace CardCrawlerTest
             root.card_set = cardSet;
             // Assert
             Assert.AreEqual(cardSet, root.card_set);
+        }
+
+        [TestMethod]
+        public void CardSetRootObjectToStringNullObjectsTest()
+        {
+            // Arrange
+            CardSetRootObject root = new CardSetRootObject();
+            // Act
+            string result = root.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("card_set"));
+        }
+
+        [TestMethod]
+        public void CardSetRootObjectToStringWithObjectsTest()
+        {
+            // Arrange
+            CardSetRootObject root = new CardSetRootObject();
+            root.card_set = new CardSet();
+            // Act
+            string result = root.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("card_set"));
+        }
+
+        [TestMethod]
+        public void CardSetToStringNullObjectsTest()
+        {
+            // Arrange
+            CardSet cardSet = new CardSet();
+            // Act
+            string result = cardSet.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("version"));
+            Assert.IsTrue(result.Contains("set_info"));
+            Assert.IsTrue(result.Contains("card_list"));
+        }
+
+        [TestMethod]
+        public void CardSetToStringWithObjectsTest()
+        {
+            // Arrange
+            CardSet cardSet = new CardSet();
+            cardSet.set_info = new SetInfo();
+            cardSet.card_list = new List<CardList>();
+            // Act
+            string result = cardSet.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("version"));
+            Assert.IsTrue(result.Contains("set_info"));
+            Assert.IsTrue(result.Contains("card_list"));
+        }
+
+        [TestMethod]
+        public void CardSetToStringMultipleCardTest()
+        {
+            // Arrange
+            CardSet cardSet = new CardSet();
+            cardSet.set_info = new SetInfo();
+            cardSet.card_list = new List<CardList>();
+            cardSet.card_list.Add(new CardList { card_type = "Creep" });
+            cardSet.card_list.Add(new CardList { card_type = "Spell" });
+            // Act
+            string result = cardSet.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("version"));
+            Assert.IsTrue(result.Contains("set_info"));
+            Assert.IsTrue(result.Contains("card_list"));
+            Assert.IsTrue(result.Contains("Creep"));
+            Assert.IsTrue(result.Contains("Spell"));
+        }
+
+        [TestMethod]
+        public void CardTextPropertyTest()
+        {
+            // Arrange
+            string testText = "Pack Leadership<BR>\nFarvhan the Dreamer's allied neighbors have +1 Armor.";
+            CardText cardText = new CardText();
+            // Act
+            cardText.english = testText;
+            // Assert
+            Assert.AreEqual(testText, cardText.english);
+        }
+
+        [TestMethod]
+        public void CardTextToStringTest()
+        {
+            // Arrange
+            CardText cardText = new CardText();
+            // Act
+            string result = cardText.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("english"));
+        }
+
+        [TestMethod]
+        public void IngameImagePropertyTest()
+        {
+            // Arrange
+            string testUrl = "<url to png>";
+            IngameImage ingameImage = new IngameImage();
+            // Act
+            ingameImage.@default = testUrl;
+            // Assert
+            Assert.AreEqual(testUrl, ingameImage.@default);
+        }
+
+        [TestMethod]
+        public void IngameImageToStringTest()
+        {
+            // Arrange
+            IngameImage ingameImage = new IngameImage();
+            // Act
+            string result = ingameImage.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("@default"));
+        }
+
+        [TestMethod]
+        public void LargeImagePropertyTest()
+        {
+            // Arrange
+            string testUrl = "<url to png>";
+            LargeImage largeImage = new LargeImage();
+            // Act
+            largeImage.@default = testUrl;
+            // Assert
+            Assert.AreEqual(testUrl, largeImage.@default);
+        }
+
+        [TestMethod]
+        public void LargeImageToStringTest()
+        {
+            // Arrange
+            LargeImage largeImage = new LargeImage();
+            // Act
+            string result = largeImage.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("@default"));
+        }
+
+        [TestMethod]
+        public void MiniImagePropertyTest()
+        {
+            // Arrange
+            string testUrl = "<url to png>";
+            MiniImage miniImage = new MiniImage();
+            // Act
+            miniImage.@default = testUrl;
+            // Assert
+            Assert.AreEqual(testUrl, miniImage.@default);
+        }
+
+        [TestMethod]
+        public void MiniImageToStringTest()
+        {
+            // Arrange
+            MiniImage miniImage = new MiniImage();
+            // Act
+            string result = miniImage.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("@default"));
+        }
+
+        [TestMethod]
+        public void NamePropertyTest()
+        {
+            // Arrange
+            string testName = "Farvhan the Dreamer";
+            Name name = new Name();
+            // Act
+            name.english = testName;
+            // Assert
+            Assert.AreEqual(testName, name.english);
+        }
+
+        [TestMethod]
+        public void NameToStringTest()
+        {
+            // Arrange
+            Name name = new Name();
+            // Act
+            string result = name.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("english"));
+        }
+
+        [TestMethod]
+        public void SetInfoPropertyTest()
+        {
+            // Arrange
+            int testSetId = 00;
+            int testPackItemDef = 0;
+            Name testName = new Name();
+            SetInfo setInfo = new SetInfo();
+            // Act
+            setInfo.set_id = testSetId;
+            setInfo.pack_item_def = testPackItemDef;
+            setInfo.name = testName;
+            // Assert
+            Assert.AreEqual(testSetId, setInfo.set_id);
+            Assert.AreEqual(testPackItemDef, setInfo.pack_item_def);
+            Assert.AreEqual(testName, setInfo.name);
+        }
+        
+        [TestMethod]
+        public void SetInfoToStringNullObjectsTest()
+        {
+            // Arrange
+            SetInfo setInfo = new SetInfo();
+            // Act
+            string result = setInfo.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("set_id"));
+            Assert.IsTrue(result.Contains("pack_item_def"));
+            Assert.IsTrue(result.Contains("name"));
+        }
+
+        [TestMethod]
+        public void SetInfoToStringWithObjectsTest()
+        {
+            // Arrange
+            SetInfo setInfo = new SetInfo();
+            setInfo.name = new Name();
+            // Act
+            string result = setInfo.ToString();
+            // Assert
+            Assert.IsTrue(result.Contains("set_id"));
+            Assert.IsTrue(result.Contains("pack_item_def"));
+            Assert.IsTrue(result.Contains("name"));
         }
     }
 }

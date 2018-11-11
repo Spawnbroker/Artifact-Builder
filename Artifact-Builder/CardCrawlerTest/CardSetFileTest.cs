@@ -43,5 +43,24 @@ namespace CardCrawlerTest
             // Assert
             Assert.AreEqual(testUrl, file.url);
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            // Arrange
+            CardSetFile file = new CardSetFile();
+            const string testUrl = "http://website.com";
+            int expireTime = 1111111;
+            const string cdn = "http://cdn.com";
+            file.cdn_root = cdn;
+            file.expire_time = expireTime;
+            file.url = testUrl;
+            // Act
+            string toString = file.ToString();
+            // Assert
+            Assert.IsTrue(toString.Contains("cdn_root"));
+            Assert.IsTrue(toString.Contains("expire_time"));
+            Assert.IsTrue(toString.Contains("url"));
+        }
     }
 }

@@ -27,8 +27,11 @@ namespace CardCrawler
             string locationJson = await service.GetRawJsonFileLocation("01");
             IJsonParsingManager jsonParser = serviceProvider.GetService<IJsonParsingManager>();
             CardSetFile cardSetFile = jsonParser.ParseRawJsonFileLocation(locationJson);
+            logger.LogDebug(cardSetFile.ToString());
             string cardSetJson = await service.GetCardSetJson(cardSetFile);
             CardSet cards = jsonParser.ParseRawJsonFile(cardSetJson);
+            logger.LogDebug(cards.ToString());
+            Console.ReadKey();
         }
 
         private static void ConfigureServices(IServiceCollection services)
