@@ -13,16 +13,16 @@ namespace CardCrawler.Services
 {
     public class BootstrapService : IBootstrapService
     {
-        private readonly ServiceProvider _serviceProvider;
+        public ServiceProvider ServiceProvider { get; }
 
         public BootstrapService()
         {
             ServiceCollection serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
-            _serviceProvider = serviceCollection.BuildServiceProvider();
+            this.ServiceProvider = serviceCollection.BuildServiceProvider();
         }
 
-        private static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(new LoggerFactory()
                 .AddConsole()
@@ -37,23 +37,6 @@ namespace CardCrawler.Services
             services.AddTransient<ILoggingAdapter<CardSetManager>, LoggingAdapter<CardSetManager>>();
             services.AddTransient<IJsonParsingManager, JsonParsingManager>();
             services.AddTransient<ILoggingAdapter<JsonParsingManager>, LoggingAdapter<JsonParsingManager>>();
-        }
-
-        public async Task Start(string[] args)
-        {
-            _serviceProvider.GetService<ILoggerFactory>()
-                .AddConsole(LogLevel.Debug);
-            var loggerFactory = _serviceProvider.GetService<ILoggerFactory>();
-            var logger = loggerFactory.CreateLogger<Program>();
-            logger.LogDebug("Starting application");
-            IHttpClientService service = _serviceProvider.GetService<IHttpClientService>();
-            string locationJson = await service.GetRawJsonFileLocation("01");
-            IJsonParsingManager jsonParser = _serviceProvider.GetService<IJsonParsingManager>();
-            CardSetFile cardSetFile = jsonParser.ParseRawJsonFileLocation(locationJson);
-            logger.LogDebug(cardSetFile.ToString());
-            string cardSetJson = await service.GetCardSetJson(cardSetFile);
-            CardSet cards = jsonParser.ParseRawJsonFile(cardSetJson);
-            logger.LogDebug(cards.ToString());
         }
     }
 }

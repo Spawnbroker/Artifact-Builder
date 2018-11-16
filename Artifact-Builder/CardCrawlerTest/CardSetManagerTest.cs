@@ -26,6 +26,7 @@ namespace CardCrawlerTest
             // Arrange
             const string testContent = "test content";
             Mock<ILoggingAdapter<CardSetManager>> mockCardSetLogger = new Mock<ILoggingAdapter<CardSetManager>>();
+            mockCardSetLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             Mock<ILoggingAdapter<HttpClientService>> mockHttpLogger = new Mock<ILoggingAdapter<HttpClientService>>();
             Mock<ILoggingAdapter<JsonParsingManager>> mockJsonLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
             Mock<HttpMessageHandler> mockMessage = new Mock<HttpMessageHandler>();
@@ -43,7 +44,6 @@ namespace CardCrawlerTest
             // Act
             await manager.GetCardSetFile(null);
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -53,6 +53,7 @@ namespace CardCrawlerTest
             // Arrange
             const string testContent = "test content";
             Mock<ILoggingAdapter<CardSetManager>> mockCardSetLogger = new Mock<ILoggingAdapter<CardSetManager>>();
+            mockCardSetLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             Mock<ILoggingAdapter<HttpClientService>> mockHttpLogger = new Mock<ILoggingAdapter<HttpClientService>>();
             Mock<ILoggingAdapter<JsonParsingManager>> mockJsonLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
             Mock<HttpMessageHandler> mockMessage = new Mock<HttpMessageHandler>();
@@ -70,7 +71,6 @@ namespace CardCrawlerTest
             // Act
             await manager.GetCardSetFile("");
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -80,6 +80,7 @@ namespace CardCrawlerTest
             // Arrange
             const string testContent = "test content";
             Mock<ILoggingAdapter<CardSetManager>> mockCardSetLogger = new Mock<ILoggingAdapter<CardSetManager>>();
+            mockCardSetLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             Mock<ILoggingAdapter<HttpClientService>> mockHttpLogger = new Mock<ILoggingAdapter<HttpClientService>>();
             Mock<ILoggingAdapter<JsonParsingManager>> mockJsonLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
             Mock<HttpMessageHandler> mockMessage = new Mock<HttpMessageHandler>();
@@ -98,7 +99,6 @@ namespace CardCrawlerTest
             CardSetFile setFile = await manager.GetCardSetFile("lkjhekljhdjkfgksghdf");
             // Assert
             // Invalid Set Id seems to return the base set, but we want to throw a format exception
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -109,6 +109,7 @@ namespace CardCrawlerTest
             string testSetId = "00";
             string testFileLocation = @"{""cdn_root"":""https:\/\/ steamcdn - a.akamaihd.net\/ "",""url"":""\/ apps\/ 583950\/ resource\/ card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541859144}";
             Mock<ILoggingAdapter<CardSetManager>> mockCardSetLogger = new Mock<ILoggingAdapter<CardSetManager>>();
+            mockCardSetLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             Mock<ILoggingAdapter<HttpClientService>> mockHttpLogger = new Mock<ILoggingAdapter<HttpClientService>>();
             Mock<ILoggingAdapter<JsonParsingManager>> mockJsonLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
             Mock<HttpMessageHandler> mockMessage = new Mock<HttpMessageHandler>();

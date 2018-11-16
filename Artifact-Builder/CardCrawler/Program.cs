@@ -16,7 +16,8 @@ namespace CardCrawler
         public static async Task Main(string[] args)
         {
             BootstrapService bootstrapper = new BootstrapService();
-            await bootstrapper.Start(args);
+            ProgramManager program = new ProgramManager(bootstrapper.ServiceProvider);
+            await program.Start(args);
             Console.ReadKey();
         }
     }

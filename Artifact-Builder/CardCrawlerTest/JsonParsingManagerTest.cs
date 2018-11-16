@@ -18,6 +18,7 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFile(null);
@@ -31,6 +32,7 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFile("");
@@ -44,6 +46,7 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFile("I am not a JSON string");
@@ -56,6 +59,7 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             const string validJsonData = @"{ ""card_set"":{ ""version"":1,""set_info"":{ ""set_id"":0,""pack_item_def"":0,""name"":{ ""english"":""Base Set""} },""card_list"":[{""card_id"":1000,""base_card_id"":1000,""card_type"":""Stronghold"",""card_name"":{""english"":""Ancient Tower""},""card_text"":{},""mini_image"":{""default"":""https://steamcdn-a.akamaihd.net/apps/583950/icons/set00/1000.91b2ed80da07ef5cf343540b09687fbf875168c8.png""},""large_image"":{""default"":""https://steamcdn-a.akamaihd.net/apps/583950/icons/set00/1000_large_english.3dea67025da70c778d014dc3aae80c0c0a7008a6.png""},""ingame_image"":{},""hit_points"":80,""references"":[]}]}}";
@@ -72,11 +76,11 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFileLocation(null);
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -85,11 +89,11 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFileLocation("");
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -98,11 +102,11 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             manager.ParseRawJsonFileLocation("I am not a JSON string");
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -111,12 +115,12 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             const string validJsonDataWithWrongKeys = @"{ ""key_A"":""https:\/\/steamcdn-a.akamaihd.net\/"",""key_B"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""key_C"":1541860748}";
             CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonDataWithWrongKeys);
             // Assert
-            Assert.Fail();
         }
 
         [TestMethod]
@@ -125,6 +129,7 @@ namespace CardCrawlerTest
             // Arrange
             const string escapeChars = @"\/";
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             const string validJsonData = @"{ ""cdn_root"":""https:\/\/steamcdn-a.akamaihd.net\/"",""url"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541860748}";
@@ -144,6 +149,7 @@ namespace CardCrawlerTest
             // Arrange
             const string escapeChars = @"\/";
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             const string jsonData = "{ \"cdn_root\":\"https:\\/\\/steamcdn-a.akamaihd.net\\/\",\"url\":\"\\/apps\\/583950\\/resource\\/card_set_1.0E871AFDD63D1CBD0FB52D924DF1923C4A6D443A.json\",\"expire_time\":1541954560}";
@@ -164,6 +170,7 @@ namespace CardCrawlerTest
             double unixTimeStamp = 1541860748;
             const string validJsonData = @"{ ""cdn_root"":""https:\/\/steamcdn-a.akamaihd.net\/"",""url"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541860748}";
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             CardSetFile cardSetFile = manager.ParseRawJsonFileLocation(validJsonData);
@@ -176,6 +183,7 @@ namespace CardCrawlerTest
         {
             // Arrange
             Mock<ILoggingAdapter<JsonParsingManager>> mockLogger = new Mock<ILoggingAdapter<JsonParsingManager>>();
+            mockLogger.Setup(logger => logger.LogError(It.IsAny<Exception>(), It.IsAny<string>())).Verifiable();
             JsonParsingManager manager = new JsonParsingManager(mockLogger.Object);
             // Act
             const string validJsonData = @"{ ""cdn_root"":""https:\/\/steamcdn-a.akamaihd.net\/"",""url"":""\/apps\/583950\/resource\/card_set_0.BB8732855C64ACE2696DCF5E25DEDD98D134DD2A.json"",""expire_time"":1541860748,""key_D"":""123""}";

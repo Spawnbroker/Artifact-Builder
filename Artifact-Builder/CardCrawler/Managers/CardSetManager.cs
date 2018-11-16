@@ -27,13 +27,17 @@ namespace CardCrawler.Managers
         {
             if(string.IsNullOrEmpty(setId))
             {
-                throw new ArgumentNullException("setId");
+                ArgumentNullException ex = new ArgumentNullException("setId");
+                _logger.LogError(ex, "Exception thrown in CardSetManager.GetCardSetFile method.");
+                throw ex;
             }
             int setIdInt;
             bool parseSucceeded = Int32.TryParse(setId, out setIdInt);
             if(!parseSucceeded)
             {
-                throw new FormatException("setId was not an integer.");
+                FormatException ex = new FormatException("setId was not an integer.");
+                _logger.LogError(ex, "Exception thrown in CardSetManager.GetCardSetFile method.");
+                throw ex;
             }
             string fileLocation = await _httpService.GetRawJsonFileLocation(setId);
             return _jsonParser.ParseRawJsonFileLocation(fileLocation);

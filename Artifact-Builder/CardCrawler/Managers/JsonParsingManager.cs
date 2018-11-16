@@ -31,7 +31,7 @@ namespace CardCrawler.Managers
             }
             catch (ArgumentException ex)
             {
-                _logger.LogError(ex, "rawJson was not in JSON format.");
+                _logger.LogError(ex, "Exception thrown in JsonParsingManager.ParseRawJsonFile method.");
                 throw new FormatException("rawJson was not in JSON format.", ex);
             }
             CardSetRootObject jsonObject = JsonConvert.DeserializeObject<CardSetRootObject>(rawJson);
@@ -51,7 +51,7 @@ namespace CardCrawler.Managers
             }
             catch(ArgumentException ex)
             {
-                _logger.LogError(ex, "locationUrl was not in JSON format.");
+                _logger.LogError(ex, "Exception thrown in JsonParsingManager.ParseRawJsonFileLocation method.");
                 throw new FormatException("locationUrl was not in JSON format.", ex);
             }
             CardSetFile cardSetFile = JsonConvert.DeserializeObject<CardSetFile>(locationUrl);
@@ -63,7 +63,7 @@ namespace CardCrawler.Managers
              || !jsonLocationUrl.ContainsKey(urlKey))
             { 
                 FormatException ex = new FormatException("locationUrl was in JSON format, but did not have the correct keys.");
-                _logger.LogError(ex, "locationUrl was in JSON format, but did not have the correct keys.");
+                _logger.LogError(ex, "Exception thrown in JsonParsingManager.ParseRawJsonFileLocation method.");
                 throw ex;
             }
             return cardSetFile;

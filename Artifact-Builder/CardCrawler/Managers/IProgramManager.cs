@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardCrawler.Services
+namespace CardCrawler.Managers
 {
-    public interface IBootstrapService
+    public interface IProgramManager
     {
-        void ConfigureServices(IServiceCollection services);
+        Task Start(string[] args);
     }
 }

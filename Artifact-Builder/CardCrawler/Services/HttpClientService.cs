@@ -36,7 +36,9 @@ namespace CardCrawler.Services
             }
             if(file.cdn_root.Contains(@"\/"))
             {
-                throw new FormatException("Invalid url format, escape characters are still in the string.");
+                FormatException ex = new FormatException("Invalid url format, escape characters are still in the string.");
+                _logger.LogError(ex, "Exception thrown in HttpClientService.GetCardSetJson method.");
+                throw ex;
             }
             string result = null;
             HttpResponseMessage response = await _client.GetAsync(file.cdn_root + file.url);
@@ -52,7 +54,7 @@ namespace CardCrawler.Services
             if(string.IsNullOrEmpty(setId))
             {
                 ArgumentNullException ex = new ArgumentNullException("setId");
-                _logger.LogError(ex, "setId cannot be null or empty.");
+                _logger.LogError(ex, "Exception thrown in HttpClientService.GetRawJsonFileLocation method.");
                 throw ex;
             }
             string result = null;
